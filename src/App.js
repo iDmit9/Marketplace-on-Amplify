@@ -23,6 +23,7 @@ class App extends React.Component {
 
   getUserData = async () => {
     const user = await Auth.currentAuthenticatedUser()
+    console.log('user', user)
     user ? this.setState({ user }) : this.setState({ user: null })
   }
 
@@ -66,8 +67,9 @@ class App extends React.Component {
             <div className="app-container">
               <Route exact path='/' component={HomePage} />
               <Route path='/profile' component={ProfilePage} />
-              <Route path='/markets/:marketId' component={
-                ({ match }) => <MarketPage marketId={match.params.marketId} />
+              <Route path='/markets/:marketId' component={({ match }) => (
+                <MarketPage user={user} marketId={match.params.marketId} />
+              )
               } />
             </div>
           </>

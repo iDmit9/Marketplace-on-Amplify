@@ -19,7 +19,9 @@ class NewMarket extends React.Component {
       const input = {
         name: this.state.name,
         tags: this.state.selectedTags,
-      }
+        owner: user.username
+      };
+      console.log('user: ', user.attributes.email) //
       const result = await API.graphql(graphqlOperation(createMarket, { input }))
 
       console.info(`Created market: id ${result.data.createMarket.id}`)
@@ -54,6 +56,28 @@ class NewMarket extends React.Component {
                 onClick={() => this.setState({ addMarketDialog: true })}
               />
             </h1>
+
+            <Form inline={true} onSubmit={this.props.handleSearch}>
+              <Form.Item>
+                <Input
+                  placeholder='Search Markets ...'
+                  value={this.props.searchTerm}
+                  icon='circle-cross'
+                  onIconClick={this.props.handleClearSearch}
+                  onChange={this.props.handleSearchChange}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  type='info'
+                  icon='search'
+                  onClick={this.props.handleSearch}
+                  loading={this.props.isSearching}
+                >
+                  Search
+              </Button>
+              </Form.Item>
+            </Form>
           </div>
 
           <Dialog
