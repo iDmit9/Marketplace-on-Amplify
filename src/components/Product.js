@@ -97,7 +97,7 @@ class Product extends React.Component {
                       ${convertCentsToDollars(product.price)}
                     </span>
                     {!isProductOwner && (
-                      <PayButton />
+                      <PayButton product={product} user={user} />
                     )}
                   </div>
                 </div>
