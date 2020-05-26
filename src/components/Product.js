@@ -34,7 +34,6 @@ class Product extends React.Component {
         message: 'Product successfully updated',
         type: 'success'
       });
-      setTimeout(() => window.location.reload(), 2000)
     } catch (err) {
       console.log(`Failed to update product with id: ${productId} `, err)
     }
@@ -52,7 +51,6 @@ class Product extends React.Component {
         message: 'Product successfully deleted',
         type: 'success'
       });
-      setTimeout(() => window.location.reload(), 2000)
     } catch (err) {
       console.log(`Failed to delete product with id: ${productId} `, err)
     }
