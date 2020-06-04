@@ -67,7 +67,7 @@ const MarketList = ({ searchResults }) => {
                         {market.products.items
                           ? market.products.items.length
                           : 0}
-                        {console.log('market', market)}
+                        {/* {console.log('market', market)} */}
                       </span>
                       <img src="https://icon.now.sh/shopping_cart/f60" alt="Shopping Cart" />
                     </span>
