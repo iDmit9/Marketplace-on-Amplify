@@ -8,10 +8,10 @@ import { history } from '../App';
 
 const stripeConfig = {
   currency: 'USD',
-  publishableAPIKey: 'pk_test_3pPuEq1LbkvNOaJy96ehPyx600y11huU1Y'
+  publishableAPIKey: '***'
 }
 
-const PayButton = ({ product, user }) => {
+const PayButton = ({ product, userAttributes }) => {
 
   const getOwnerEmail = async ownerId => {
     try {
@@ -36,7 +36,7 @@ const PayButton = ({ product, user }) => {
       const ownerEmail = await getOwnerEmail(product.owner)
       console.log('product.owner', product.owner)
       console.log('ownerEmail', ownerEmail)
-      console.log('customerEmail', user.attributes.email)
+      // console.log('customerEmail', userAttributes.email)
       const result = await API.post('orderlambda', '/charge', {
         body: {
           token,
@@ -46,7 +46,7 @@ const PayButton = ({ product, user }) => {
             description: product.description
           },
           email: {
-            customerEmail: user.attributes.email,
+            customerEmail: userAttributes.email,
             ownerEmail,
             shipped: product.shipped
           }
@@ -59,11 +59,10 @@ const PayButton = ({ product, user }) => {
           shippingAddress = createShippingAddress(result.charge.source)
         }
         const input = {
-          orderUserId: user.attributes.sub,
+          orderUserId: userAttributes.sub,
           orderProductId: product.id,
           shippingAddress
         }
-        console.log('user = ', user)
         console.log('input = ', input)
         const order = await API.graphql(graphqlOperation(createOrder, { input }))
         console.log({ order })
@@ -95,7 +94,7 @@ const PayButton = ({ product, user }) => {
   return (
     <StripeCheckout
       token={handleCharge}
-      email={user.attributes.email}
+      email={userAttributes.email}
       name={product.description}
       amount={product.price}
       currency={stripeConfig.currency}
