@@ -1,0 +1,62 @@
+//*This file should be in the directory \**Your_Project_Directory**\amplify\backend\api\amplifyagora\schema.graphql 
+
+type Market @model @searchable {
+  id: ID!
+  name: String!
+  products: [Product] @connection(name: "MarketProducts", sortField: "createdAt")
+  tags: [String]
+  owner: String!
+  createdAt: AWSDateTime 
+}
+
+type Product @model @auth(rules: [{allow: owner, identityField: "sub", operations: [create, update, delete]}
+]) {
+  id: ID!
+  description: String!
+  market: Market @connection(name: "MarketProducts")
+  file: S3Object!
+  price: Float!
+  shipped: Boolean!
+  owner: String
+  createdAt: AWSDateTime 
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type User
+@model(
+  queries: {get: "getUser"},
+  mutations: {create: "registerUser", update: "updateUser"},
+  subscriptions: null
+) {
+  id: ID!
+  username: String!
+  email: String!
+  registered: Boolean
+  orders: [Order] @connection(name: "UserOrders", sortField: "createdAt")
+}
+
+type Order
+@model(
+  queries: null,
+  mutations: {create: "createOrder"},
+  subscriptions: null
+) {
+  id: ID!
+  product: Product @connection
+  user: User @connection(name: "UserOrders")
+  shippingAddress: ShippingAddress
+  createdAt: AWSDateTime 
+}
+
+type ShippingAddress {
+  city: String!
+  country: String!
+  address_line1: String!
+  address_state: String!
+  address_zip: String!
+}
