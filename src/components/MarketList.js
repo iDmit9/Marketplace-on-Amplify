@@ -1,11 +1,38 @@
 import React from "react";
 import { graphqlOperation } from 'aws-amplify';
 import { Connect } from 'aws-amplify-react';
-import { listMarkets } from '../graphql/queries';
+// import { listMarkets } from '../graphql/queries';
 import { onCreateMarket } from '../graphql/subscriptions';
 import { Loading, Card, Icon, Tag } from "element-react";
 import { Link } from 'react-router-dom';
 import Error from './Error';
+
+//Everything should work with standard queries generated from the schema.
+//But probably in new versions of Amplify it works differently, so I slightly changed the standard request.
+const myListMarkets = /* GraphQL */ `
+  query ListMarkets(
+    $filter: ModelMarketFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMarkets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        products {
+          items {
+            id
+          }
+          nextToken
+        }
+        tags
+        owner
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
 
 const MarketList = ({ searchResults }) => {
   const onNewMarket = (prevQuery, newData) => {
@@ -20,7 +47,7 @@ const MarketList = ({ searchResults }) => {
 
   return (
     <Connect
-      query={graphqlOperation(listMarkets)}
+      query={graphqlOperation(myListMarkets)}
       subscription={graphqlOperation(onCreateMarket)}
       onSubscriptionMsg={onNewMarket}
     >
