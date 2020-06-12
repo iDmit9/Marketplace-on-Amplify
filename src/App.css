@@ -10,6 +10,19 @@ body {
   padding: 1em 5em 2em 5em;
 }
 
+.auth-container {        
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+:root {
+  --amplify-primary-color: #00a1c9;
+  --amplify-primary-tint: #50bfff;
+  --amplify-primary-shade: #00a1c9;
+}
+
 @media (max-width: 550px) {
   .app-container {
     padding: 1em 3em;

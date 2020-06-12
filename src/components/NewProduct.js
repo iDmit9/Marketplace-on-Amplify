@@ -145,14 +145,16 @@ class NewProduct extends React.Component {
                 },
                 sectionBody: {
                   margin: 0,
-                  width: '250px'
+                  width: '250px',
+                  paddingBottom: '30px'
                 },
                 sectionHeader: {
                   padding: '0.2em',
                   color: 'var(--darkAmazonOrange)'
                 },
                 photoPickerButton: {
-                  display: 'none'
+                //   display: 'none'
+                  backgroundColor: 'var(--color-purple)'
                 }
               }}
             />

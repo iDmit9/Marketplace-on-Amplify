@@ -104,7 +104,7 @@ class MarketPage extends React.Component {
       id: this.props.marketId
     }
     const result = await API.graphql(graphqlOperation(getMarket, input));
-    console.log(result);
+    
     this.setState({ market: result.data.getMarket, isLoading: false }, () => {
       this.checkMarketOwner()
       this.checkEmailVerified()

@@ -3,7 +3,6 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { S3Image } from 'aws-amplify-react';
 import { Notification, Popover, Button, Dialog, Card, Form, Input, Radio } from "element-react";
 import { updateProduct, deleteProduct } from '../graphql/mutations';
-import { Container } from "aws-amplify-react/dist/AmplifyUI";
 import { Link } from 'react-router-dom';
 import { convertCentsToDollars, convertDollarsToCents } from '../utils';
 import { UserContext } from '../App';

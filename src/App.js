@@ -2,14 +2,16 @@ import React from "react";
 import { Auth, Hub, API, graphqlOperation } from "aws-amplify";
 import { getUser } from './graphql/queries';
 import { registerUser } from "./graphql/mutations";
-import { Authenticator, AmplifyTheme } from 'aws-amplify-react';
+import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
 import { Router, Route } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import MarketPage from './pages/MarketPage';
 import Navbar from './components/Navbar';
 import "./App.css";
+
+import '@aws-amplify/ui/dist/style.css';
 
 export const history = createBrowserHistory();
 
@@ -22,16 +24,21 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    console.dir(AmplifyTheme);
     this.getUserData();
-    Hub.listen('auth', this, 'onHubCapsule')
+    Hub.listen('auth', this.listener)
   }
 
   getUserData = async () => {
-    const user = await Auth.currentAuthenticatedUser()
-    user
-      ? this.setState({ user }, () => this.getUserAttributes(this.state.user))
-      : this.setState({ user: null })
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      user
+        ? this.setState({ user }, () => this.getUserAttributes(this.state.user))
+        : this.setState({ user: null })
+      console.log('getUserData', user)
+    } catch (error) {
+      console.error('Still not logged in')
+    }
+    //Otherwise: Uncaught (in promise) not authenticated
   }
 
   getUserAttributes = async authUserData => {
@@ -40,12 +47,12 @@ class App extends React.Component {
     this.setState({ userAttributes: attributesObj })
   }
 
-  onHubCapsule = capsule => {
-    switch (capsule.payload.event) {
+  listener = data => {
+    switch (data.payload.event) {
       case "signIn":
         console.log('signed in')
         this.getUserData()
-        this.registerNewUser(capsule.payload.data)
+        this.registerNewUser(data.payload.data)
         break;
       case 'signUp':
         console.log('signed up')
@@ -93,53 +100,38 @@ class App extends React.Component {
   render() {
     const { user, userAttributes } = this.state;
 
-    return !user ? <Authenticator theme={theme} /> : (
-      <UserContext.Provider value={{ user, userAttributes }}>
-        <Router history={history}>
-          <>
-            {/* Navigation */}
-            <Navbar user={user} handleSignOut={this.handleSignOut} />
+    return !user
+      ? (
+        <div className='auth-container'>
+          <AmplifyAuthenticator />
+        </div>
+      ) : (
+        <UserContext.Provider value={{ user, userAttributes }}>
+          <Router history={history}>
+            <>
+              {/* Navigation */}
+              <Navbar user={user} handleSignOut={this.handleSignOut} />
 
-            {/* Routes */}
-            <div className="app-container">
-              <Route exact path='/' component={HomePage} />
-              <Route
-                path='/profile'
-                component={() => <ProfilePage user={user} userAttributes={userAttributes} />} />
-              <Route
-                path='/markets/:marketId'
-                component={({ match }) => (
-                  <MarketPage user={user} userAttributes={userAttributes} marketId={match.params.marketId} />
-                )
-                }
-              />
-            </div>
-          </>
-        </Router>
-      </UserContext.Provider>
-    )
+              {/* Routes */}
+              <div className="app-container">
+                <Route exact path='/' component={HomePage} />
+                <Route
+                  path='/profile'
+                  component={() => <ProfilePage user={user} userAttributes={userAttributes} />} />
+                <Route
+                  path='/markets/:marketId'
+                  component={({ match }) => (
+                    <MarketPage user={user} userAttributes={userAttributes} marketId={match.params.marketId} />
+                  )
+                  }
+                />
+                {/* <Redirect to='/' /> */}
+              </div>
+            </>
+          </Router>
+        </UserContext.Provider>
+      )
   }
 }
 
-const theme = {
-  ...AmplifyTheme,
-  navBar: {
-    ...AmplifyTheme.navBar,
-    backgroundColor: "#ffc0cb"
-  },
-  button: {
-    ...AmplifyTheme.button,
-    backgroundColor: "var(--light-blue)"
-  },
-  sectionBody: {
-    ...AmplifyTheme.sectionBody,
-    padding: "5px"
-  },
-  sectionHeader: {
-    ...AmplifyTheme.sectionHeader,
-    backgroundColor: "var(--lightSquidInk)"
-  }
-}
-
-// export default withAuthenticator(App, true, [], null, theme);
 export default App;

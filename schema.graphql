@@ -9,7 +9,7 @@ type Market @model @searchable {
   createdAt: AWSDateTime 
 }
 
-type Product @model @auth(rules: [{allow: owner, identityField: "sub", operations: [create, update, delete]}
+type Product @model @auth(rules: [{allow: owner, identityClaim: "sub", operations: [create, update, delete]}
 ]) {
   id: ID!
   description: String!
