@@ -5,6 +5,7 @@ Done:
 - Сhanged styles a bit
 - Delete { Connect } from 'aws-amplify-react' and fetch marketList using API.graphql with creating of subscription onCreateMarket
 - Change identityField to identityClaim in schema.graphql because identityField deprecated
+- Changed date-fns to v2
 
 ToDo:
 

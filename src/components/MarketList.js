@@ -1,7 +1,5 @@
 import React from "react";
 import { API, graphqlOperation } from 'aws-amplify';
-// import { Connect } from 'aws-amplify-react';
-// import { listMarkets } from '../graphql/queries';
 import { onCreateMarket } from '../graphql/subscriptions';
 import { Loading, Card, Icon, Tag } from "element-react";
 import { Link } from 'react-router-dom';
@@ -47,7 +45,6 @@ class MarketList extends React.Component {
       .subscribe({
         next: marketData => {
           const createdMarket = marketData.value.data.onCreateMarket;
-          // console.log(marketData.value.data)
           const prevMarkets = this.state.listMarkets.filter(
             item => item.id !== createdMarket.id
           )
@@ -64,16 +61,12 @@ class MarketList extends React.Component {
 
   handleMarketsList = async () => {
     const result = await API.graphql(graphqlOperation(myListMarkets));
-    // console.log(result);
     this.setState({ listMarkets: result.data.listMarkets.items, isLoading: false });
   }
 
   render() {
     const { listMarkets, isLoading } = this.state;
     const { searchResults } = this.props;
-
-    // console.log('searchResults', searchResults)
-    // console.log('listMarkets', listMarkets)
 
     if (isLoading) return <Loading fullscreen={true} />
 
@@ -117,7 +110,6 @@ class MarketList extends React.Component {
                     {market.products.items
                       ? market.products.items.length
                       : 0}
-                    {/* {console.log('market', market)} */}
                   </span>
                   <img src="https://icon.now.sh/shopping_cart/f60" alt="Shopping Cart" />
                 </span>

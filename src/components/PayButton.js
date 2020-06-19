@@ -34,9 +34,6 @@ const PayButton = ({ product, userAttributes }) => {
   const handleCharge = async token => {
     try {
       const ownerEmail = await getOwnerEmail(product.owner)
-      console.log('product.owner', product.owner)
-      console.log('ownerEmail', ownerEmail)
-      // console.log('customerEmail', userAttributes.email)
       const result = await API.post('orderlambda', '/charge', {
         body: {
           token,
@@ -52,7 +49,6 @@ const PayButton = ({ product, userAttributes }) => {
           }
         }
       });
-      console.log({ result });
       if (result.charge.status === 'succeeded') {
         let shippingAddress = null;
         if (product.shipped) {
@@ -63,7 +59,6 @@ const PayButton = ({ product, userAttributes }) => {
           orderProductId: product.id,
           shippingAddress
         }
-        console.log('input = ', input)
         const order = await API.graphql(graphqlOperation(createOrder, { input }))
         console.log({ order })
         Notification({

@@ -34,11 +34,9 @@ class App extends React.Component {
       user
         ? this.setState({ user }, () => this.getUserAttributes(this.state.user))
         : this.setState({ user: null })
-      console.log('getUserData', user)
     } catch (error) {
       console.error('Still not logged in')
     }
-    //Otherwise: Uncaught (in promise) not authenticated
   }
 
   getUserAttributes = async authUserData => {
@@ -125,7 +123,6 @@ class App extends React.Component {
                   )
                   }
                 />
-                {/* <Redirect to='/' /> */}
               </div>
             </>
           </Router>

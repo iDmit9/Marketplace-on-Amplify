@@ -1,12 +1,15 @@
 {
   "name": "react-amplify-project-three",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.8",
-    "aws-amplify": "^3.0.17",
-    "aws-amplify-react": "^4.1.16",
-    "date-fns": "^1.29.0",
+    "@aws-amplify/ui-react": "^0.2.9",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "aws-amplify": "^3.0.18",
+    "aws-amplify-react": "^4.1.17",
+    "date-fns": "^2.14.0",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
     "react": "^16.13.1",
@@ -24,13 +27,19 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "react-hot-loader": "^4.5.3"
+    "react-hot-loader": "^4.12.21"
   }
 }

@@ -32,7 +32,6 @@ class HomePage extends React.Component {
           direction: "desc"
         }
       }))
-      // console.log('result',result)
       this.setState({
         searchResults: result.data.searchMarkets.items,
         isSearching: false

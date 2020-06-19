@@ -23,7 +23,6 @@ class NewProduct extends React.Component {
 
   handleAddProduct = async () => {
     try {
-      console.log(this.state)
       this.setState({ isUploading: true });
       const visibility = 'public';
       const { identityId } = await Auth.currentCredentials();

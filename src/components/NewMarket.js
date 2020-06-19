@@ -21,7 +21,6 @@ class NewMarket extends React.Component {
         tags: this.state.selectedTags,
         owner: user.username
       };
-      console.log('user: ', user.attributes.email) //
       const result = await API.graphql(graphqlOperation(createMarket, { input }))
 
       console.info(`Created market: id ${result.data.createMarket.id}`)
