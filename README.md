@@ -32,7 +32,7 @@ Here we choose GraphQL. This command allows you to select an authorization servi
 
 `amplify push`
 
-This command should be executed every time after adding any resource. We also need to add a border for the picture:
+This command should be executed every time after adding any resource. We also need to add a storage for the picture:
 
 `amplify add storage`
 
