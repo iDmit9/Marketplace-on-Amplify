@@ -20,7 +20,7 @@ Also worth noting is schema.graphql, which is used by AWS Amplify to create the 
 
 ### Running locally
 
-To run this application locally you need, after cloning the repository and installing the packages, also install CLI and configure the application. To install Amplifay CLI [read the guide](https://docs.amplify.aws/cli/start/install).Then run the command:
+To run this application locally you need, after cloning the repository and installing the packages, also install CLI and configure the application. To install Amplify CLI [read the guide](https://docs.amplify.aws/cli/start/install).Then run the command:
 
 `amplify init`
 
@@ -28,7 +28,7 @@ Here we simply indicate everything standard that we use (javascript, react, etc.
 
 `amplify add api`
 
-Here we choose GraphQL. This command allows you to select an authorization service. In our case used Cognito, provided by: awscloudformation. We choose that we will use to enter Email and Phone Number. And at the end, we indicate that we want a guided schema creation. After which Amplifay will open a schema.graphql file. Its code can be found in the root of the repository. When saving it will create GraphQL for us locally and to upload it you need to execute the command:
+Here we choose GraphQL. This command allows you to select an authorization service. In our case used Cognito, provided by: awscloudformation. We choose that we will use to enter Email and Phone Number. And at the end, we indicate that we want a guided schema creation. After which Amplify will open a schema.graphql file. Its code can be found in the root of the repository. When saving it will create GraphQL for us locally and to upload it you need to execute the command:
 
 `amplify push`
 
